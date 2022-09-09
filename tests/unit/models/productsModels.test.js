@@ -3,7 +3,7 @@ const sinon = require('sinon');
 
 const connection = require('../../../src/models/db/connection');
 const { productsModel } = require('../../../src/models');
-const productsMock = require('./mocks/productsModelsMock');
+const { productsMockFromDB } = require('./mocks/productsModelsMocks');
 
 describe('Products Model', function () {
   afterEach(function () {
@@ -11,16 +11,16 @@ describe('Products Model', function () {
   });
 
   it('Lista todos os produtos', async function () {
-    sinon.stub(connection, 'execute').resolves([productsMock.productsMockFromDB]);
+    sinon.stub(connection, 'execute').resolves([productsMockFromDB]);
     const response = await productsModel.findAllProducts();
-    expect(response).to.deep.equal(productsMock.productsMockFromDB);
+    expect(response).to.deep.equal(productsMockFromDB);
   });
 
   it('Lista o produto pelo id', async function () {
-    sinon.stub(connection, 'execute').resolves([productsMock.productsMockFromDB[1]]);
+    sinon.stub(connection, 'execute').resolves([productsMockFromDB[1]]);
 
-    const response = await productsModel.findAllProductsById(2);
+    const response = await productsModel.findProductsById(2);
 
-    expect(response).to.deep.equal(productsMock.productsMockFromDB[1])
+    expect(response).to.deep.equal(productsMockFromDB[1])
   });
 });
