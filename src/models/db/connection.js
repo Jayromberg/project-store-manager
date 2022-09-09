@@ -8,4 +8,4 @@ const connection = mysql.createPool({
   port: process.env.MYSQL_PORT || 3306,
 });
 
-module.exports = { connection };
+module.exports = connection;

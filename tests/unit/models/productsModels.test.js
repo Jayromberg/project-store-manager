@@ -6,23 +6,21 @@ const { productsModel } = require('../../../src/models');
 const productsMock = require('./mocks/productsModelsMock');
 
 describe('Products Model', function () {
-  beforeEach(function () {
-    sinon.stub(connection, 'execute').resolves(productsMock.productsMockFromDB);
-  });
   afterEach(function () {
-    sinon.restore;
+    sinon.restore();
   });
-  it('com o tipo array', async function () {
-    const response = await productsModel.findAllProducts();
-    expect(response).to.be.a('array');
-  });
-  it('Lista todos os produtos', async function () {
-    const response = await productsModel.findAllProducts();
 
+  it('Lista todos os produtos', async function () {
+    sinon.stub(connection, 'execute').resolves([productsMock.productsMockFromDB]);
+    const response = await productsModel.findAllProducts();
     expect(response).to.deep.equal(productsMock.productsMockFromDB);
   });
 
-  it('Lista o produto pelo id', function () {
+  it('Lista o produto pelo id', async function () {
+    sinon.stub(connection, 'execute').resolves([productsMock.productsMockFromDB[1]]);
 
+    const response = await productsModel.findAllProductsById(2);
+
+    expect(response).to.deep.equal(productsMock.productsMockFromDB[1])
   });
 });
