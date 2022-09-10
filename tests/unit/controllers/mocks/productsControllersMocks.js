@@ -20,10 +20,16 @@ const servicesProductResponseById = [
   },
 ];
 
+const insertedProduct = {
+  "id": 4,
+  "name": "ProdutoX"
+}
+
 const productNotFound = new Error("Product not found");
 
 module.exports = {
   servicesProductResponse,
   servicesProductResponseById,
   productNotFound,
+  insertedProduct,
 };

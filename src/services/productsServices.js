@@ -11,7 +11,13 @@ const getProductsByID = async (id) => {
   return isProductIdExists(product);
 };
 
+const insertProduct = async (product) => {
+  const { insertId } = await productsModel.InsertProduct(product);
+  return { id: insertId, name: product };
+};
+
 module.exports = {
   getAllProducts,
   getProductsByID,
+  insertProduct,
 };
