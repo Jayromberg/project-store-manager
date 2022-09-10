@@ -8,7 +8,6 @@ const getAllProducts = async () => {
 
 const getProductsByID = async (id) => {
   const product = await productsModel.findProductsById(id);
-  
   return isProductIdExists(product);
 };
 
