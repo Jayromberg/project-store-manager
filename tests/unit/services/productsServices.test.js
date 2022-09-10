@@ -18,9 +18,16 @@ describe('Products Services', function () {
 
   it('Lista o produto pelo id com sucesso', async function () {
     sinon.stub(productsModel, 'findProductsById').resolves(productResponse[1]);
+    const product = await productsServices.getProductsByID(2);
+    expect(product.message).to.deep.equal(productResponse[1])
+  });
 
-    const response = await productsServices.getProductsByID(2);
+  it('Produto não encontrado', async function () {
+    sinon.stub(productsModel, 'findAllProducts').resolves(productResponse);
+    sinon.stub(productsModel, 'findProductsById').resolves(undefined);
+    const product = await productsServices.getProductsByID(5);
 
-    expect(response.message).to.deep.equal(productResponse[1])
+    expect(product.message).to.be.equal('Product not found');
+    expect(product.type).to.be.equal('NOT_FOUND');
   });
 });
