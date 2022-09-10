@@ -13,13 +13,13 @@ describe('Products Services', function () {
   it('Lista todos os produtos com sucesso', async function () {
     sinon.stub(productsModel, 'findAllProducts').resolves(productResponse);
     const products = await productsServices.getAllProducts();
-    expect(products.message).to.deep.equal(productResponse);
+    expect(products).to.deep.equal(productResponse);
   });
 
   it('Lista o produto pelo id com sucesso', async function () {
     sinon.stub(productsModel, 'findProductsById').resolves(productResponse[1]);
     const product = await productsServices.getProductsByID(2);
-    expect(product.message).to.deep.equal(productResponse[1])
+    expect(product).to.deep.equal(productResponse[1])
   });
 
   it('Produto não encontrado', async function () {

@@ -23,7 +23,7 @@ describe('Products Controllers', function () {
     sinon.stub(productsServices, 'getAllProducts').resolves(servicesProductResponse);
     await productsControllers.getAllProducts(req, res, next);
     expect(res.status).to.have.been.calledWith(200);
-    expect(res.json).to.have.been.calledWith(servicesProductResponse.message);
+    expect(res.json).to.have.been.calledWith(servicesProductResponse);
   });
   it('Busca um produto em estoque pelo id', async function () {
     const res = {};
@@ -34,7 +34,7 @@ describe('Products Controllers', function () {
     sinon.stub(productsServices, 'getProductsByID').resolves(servicesProductResponseById);
     await productsControllers.getProductsById(req, res, next);
     expect(res.status).to.have.been.calledWith(200);
-    expect(res.json).to.have.been.calledWith(servicesProductResponseById.message[0]);
+    expect(res.json).to.have.been.calledWith(servicesProductResponseById[0]);
   });
   it('Retorna erro se o id for invalido', async function () {
     // https://stackoverflow.com/questions/39387822/how-to-handle-sinon-stub-throws-in-unit-test-by-sinon-js

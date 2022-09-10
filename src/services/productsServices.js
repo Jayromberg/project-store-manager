@@ -3,7 +3,7 @@ const { isProductIdExists } = require('./validations/productValidation');
 
 const getAllProducts = async () => {
   const result = await productsModel.findAllProducts();
-  return { type: null, message: result };
+  return result;
 };
 
 const getProductsByID = async (id) => {
