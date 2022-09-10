@@ -16,11 +16,11 @@ describe('Products Services', function () {
     expect(products.message).to.deep.equal(productResponse);
   });
 
-  // it('Lista o produto pelo id', async function () {
-  //   sinon.stub(connection, 'execute').resolves([productsMockFromDB[1]]);
+  it('Lista o produto pelo id com sucesso', async function () {
+    sinon.stub(productsModel, 'findProductsById').resolves(productResponse[1]);
 
-  //   const response = await productsModel.findProductsById(2);
+    const response = await productsServices.getProductsByID(2);
 
-  //   expect(response).to.deep.equal(productsMockFromDB[1])
-  // });
+    expect(response.message).to.deep.equal(productResponse[1])
+  });
 });
