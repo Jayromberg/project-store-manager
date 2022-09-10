@@ -61,7 +61,7 @@ describe('Products Controllers', function () {
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
     sinon.stub(productsServices, 'insertProduct').resolves(insertedProduct);
-    await productsControllers.getProductsById(req, res, next);
+    await productsControllers.addProduct(req, res, next);
     expect(res.status).to.have.been.calledWith(201);
     expect(res.json).to.have.been.calledWith(insertedProduct);
   });
