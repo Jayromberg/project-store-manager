@@ -1,5 +1,5 @@
 const isProductIdExists = async (product) => {
-  if (product.length === 0) return { type: 'NOT_FOUND', message: 'Product not found' };
+  if (product.length === 0) throw new Error('PRODUCT_NOT_FOUND');
   return { type: null, message: product };
 };
 

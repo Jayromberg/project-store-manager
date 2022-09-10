@@ -24,8 +24,10 @@ describe('Products Services', function () {
 
   it('Produto não encontrado', async function () {
     sinon.stub(productsModel, 'findProductsById').resolves([]);
-    const product = await productsServices.getProductsByID(5);
-    expect(product.message).to.be.equal('Product not found');
-    expect(product.type).to.be.equal('NOT_FOUND');
+    try {
+      await productsServices.getProductsByID(5)
+    } catch (error) {
+      expect(error.message).to.be.equal('PRODUCT_NOT_FOUND');
+    }
   });
 });

@@ -1,7 +1,10 @@
 const errorMap = {
-  NOT_FOUND: 404,
+  PRODUCT_NOT_FOUND: {
+    code: 404,
+    message: 'Product not found',
+  },
 };
 
-const mapError = (type) => errorMap[type] || 500;
+const mapError = (type) => errorMap[type] || { code: 500, message: 'Internal error' };
 
 module.exports = mapError;

@@ -17,31 +17,34 @@ describe('Products Controllers', function () {
   it('Busca todos os produtos em estoque', async function () {
     const res = {};
     const req = {};
+    const next = sinon.stub().returns();
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
     sinon.stub(productsServices, 'getAllProducts').resolves(servicesProductResponse);
-    await productsControllers.getAllProducts(req, res);
+    await productsControllers.getAllProducts(req, res, next);
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(servicesProductResponse.message);
   });
   it('Busca um produto em estoque pelo id', async function () {
     const res = {};
-    const req = { params: { id: 2 }, body: {} };;
+    const req = { params: { id: 2 }, body: {} };
+    const next = sinon.stub().returns();
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
     sinon.stub(productsServices, 'getProductsByID').resolves(servicesProductResponseById);
-    await productsControllers.getProductsById(req, res);
+    await productsControllers.getProductsById(req, res, next);
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(servicesProductResponseById.message[0]);
   });
   it('Retorna erro se o id for invalido', async function () {
+    // https://stackoverflow.com/questions/39387822/how-to-handle-sinon-stub-throws-in-unit-test-by-sinon-js
     const res = {};
-    const req = { params: { id: 999999999 }, body: {} };;
+    const req = { params: { id: 999999999 }, body: {} };
+    const next = sinon.stub().returns();
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
-    sinon.stub(productsServices, 'getProductsByID').resolves(productNotFound);
-    await productsControllers.getProductsById(req, res);
-    expect(res.status).to.have.been.calledWith(404);
-    expect(res.json).to.have.been.calledWith({ message: productNotFound.message });
+    sinon.stub(productsServices, 'getProductsByID').throws(productNotFound);
+    await productsControllers.getProductsById(req, res, next);
+    expect(next).to.have.been.calledWith(productNotFound);
   });
 });

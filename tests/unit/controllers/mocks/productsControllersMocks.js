@@ -24,7 +24,7 @@ const servicesProductResponseById = {
   ]
 };
 
-const productNotFound = { type: 'NOT_FOUND', message: 'Product not found' };
+const productNotFound = new Error("Product not found");;
 
 module.exports = {
   servicesProductResponse,
