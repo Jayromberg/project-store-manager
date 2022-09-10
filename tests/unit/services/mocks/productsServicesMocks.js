@@ -13,6 +13,12 @@ const productResponse = [
   }
 ];
 
+const insertedProduct = {
+  "id": 4,
+  "name": "ProdutoX"
+}
+
 module.exports = {
   productResponse,
+  insertedProduct,
 };

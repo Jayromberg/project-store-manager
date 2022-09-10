@@ -3,7 +3,7 @@ const sinon = require('sinon');
 
 const productsModel = require('../../../src/models/productsModel');
 const { productsServices } = require('../../../src/services');
-const { productResponse } = require('./mocks/productsServicesMocks');
+const { productResponse, insertedProduct } = require('./mocks/productsServicesMocks');
 
 describe('Products Services', function () {
   afterEach(function () {
@@ -29,5 +29,11 @@ describe('Products Services', function () {
     } catch (error) {
       expect(error.message).to.be.equal('PRODUCT_NOT_FOUND');
     }
+  });
+
+  it('Insere o produto no banco de dados', async function () {
+    sinon.stub(productsModel, 'InsertProduct').resolves({ insertId: 4 });
+    const product = await productsServices.insertProduct('ProdutoX');
+    expect(product).to.deep.equal(insertedProduct);
   });
 });

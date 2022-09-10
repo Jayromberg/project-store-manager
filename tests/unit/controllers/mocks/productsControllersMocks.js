@@ -20,7 +20,7 @@ const servicesProductResponseById = [
   },
 ];
 
-const productNotFound = new Error("Product not found");;
+const productNotFound = new Error("Product not found");
 
 module.exports = {
   servicesProductResponse,
