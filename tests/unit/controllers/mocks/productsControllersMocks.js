@@ -14,9 +14,20 @@ const servicesProductResponse = {
   }]
 };
 
+const servicesProductResponseById = {
+  type: null,
+  message: [
+  {
+    "id": 2,
+    "name": "Traje de encolhimento"
+  },
+  ]
+};
+
 const productNotFound = { type: 'NOT_FOUND', message: 'Product not found' };
 
 module.exports = {
   servicesProductResponse,
+  servicesProductResponseById,
   productNotFound,
 };

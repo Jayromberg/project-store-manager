@@ -2,8 +2,7 @@ const { productsServices } = require('../services');
 const mapError = require('../utils/mapError');
 
 const getAllProducts = async (_req, res) => {
-  const { type, message } = await productsServices.getAllProducts();
-  if (type) return res.status(mapError(type)).json(message);
+  const { message } = await productsServices.getAllProducts();
   res.status(200).json(message);
 };
 
