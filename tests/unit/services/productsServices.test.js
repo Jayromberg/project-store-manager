@@ -23,7 +23,6 @@ describe('Products Services', function () {
   });
 
   it('Produto não encontrado', async function () {
-    sinon.stub(productsModel, 'findAllProducts').resolves(productResponse);
     sinon.stub(productsModel, 'findProductsById').resolves(undefined);
     const product = await productsServices.getProductsByID(5);
 

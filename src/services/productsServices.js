@@ -1,4 +1,5 @@
 const { productsModel } = require('../models');
+const { isProductIdExists } = require('./validations/productValidation');
 
 const getAllProducts = async () => {
   const result = await productsModel.findAllProducts();
@@ -6,8 +7,9 @@ const getAllProducts = async () => {
 };
 
 const getProductsByID = async (id) => {
-  const result = await productsModel.findProductsById(id);
-  return { type: null, message: result };
+  const product = await productsModel.findProductsById(id);
+  
+  return isProductIdExists(product);
 };
 
 module.exports = {
