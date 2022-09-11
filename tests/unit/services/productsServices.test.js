@@ -31,6 +31,15 @@ describe('Products Services', function () {
     }
   });
 
+  it('Resultado da pesquisa de produtos não encontrada', async function () {
+    sinon.stub(productsModel, 'findAllProducts').resolves(undefined);
+    try {
+      await productsServices.getAllProducts();
+    } catch (error) {
+      expect(error.message).to.be.equal('INTERNAL_ERROR');
+    }
+  });
+
   it('Insere o produto no banco de dados', async function () {
     sinon.stub(productsModel, 'InsertProduct').resolves({ insertId: 4 });
     const product = await productsServices.insertProduct({ name: 'ProdutoX' });

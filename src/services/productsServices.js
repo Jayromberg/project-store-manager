@@ -3,7 +3,7 @@ const { productNameValidation } = require('./validations/productValidation');
 
 const getAllProducts = async () => {
   const products = await productsModel.findAllProducts();
-  if (products.length === 0) throw new Error('PRODUCT_NOT_FOUND');
+  if (!products) throw new Error('INTERNAL_ERROR');
   return products;
 };
 
