@@ -23,11 +23,10 @@ describe('Products Controllers', function () {
   it('Busca todos os produtos em estoque', async function () {
     const res = {};
     const req = {};
-    const next = sinon.stub().returns();
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
     sinon.stub(productsServices, 'getAllProducts').resolves(servicesProductResponse);
-    await productsControllers.getAllProducts(req, res, next);
+    await productsControllers.getAllProducts(req, res);
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(servicesProductResponse);
   });
@@ -35,11 +34,10 @@ describe('Products Controllers', function () {
   it('Busca um produto em estoque pelo id', async function () {
     const res = {};
     const req = { params: { id: 2 }, body: {} };
-    const next = sinon.stub().returns();
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
     sinon.stub(productsServices, 'getProductsByID').resolves(servicesProductResponseById);
-    await productsControllers.getProductsById(req, res, next);
+    await productsControllers.getProductsById(req, res);
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(servicesProductResponseById[0]);
   });
@@ -48,22 +46,21 @@ describe('Products Controllers', function () {
     // https://stackoverflow.com/questions/39387822/how-to-handle-sinon-stub-throws-in-unit-test-by-sinon-js
     const res = {};
     const req = { params: { id: 999999999 }, body: {} };
-    const next = sinon.stub().returns();
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
     sinon.stub(productsServices, 'getProductsByID').throws(productNotFound);
-    await productsControllers.getProductsById(req, res, next);
-    expect(next).to.have.been.calledWith(productNotFound);
+    await productsControllers.getProductsById(req, res);
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith({ "message": "Product not found" });
   });
 
   it('Adiciona um produto no banco de dados', async function () {
     const res = {};
     const req = { params: {}, body: { "name": "ProdutoX" } };
-    const next = sinon.stub().returns();
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
     sinon.stub(productsServices, 'insertProduct').resolves(insertedProduct);
-    await productsControllers.addProduct(req, res, next);
+    await productsControllers.addProduct(req, res);
     expect(res.status).to.have.been.calledWith(201);
     expect(res.json).to.have.been.calledWith(insertedProduct);
   });
@@ -71,22 +68,22 @@ describe('Products Controllers', function () {
   it('Retorna erro se o name não existir', async function () {
     const res = {};
     const req = { params: {}, body: {} };
-    const next = sinon.stub().returns();
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
     sinon.stub(productsServices, 'insertProduct').throws(errorInKeyName);
-    await productsControllers.addProduct(req, res, next);
-    expect(next).to.have.been.calledWith(errorInKeyName);
+    await productsControllers.addProduct(req, res);
+    expect(res.status).to.have.been.calledWith(400);
+    expect(res.json).to.have.been.calledWith({ "message": "\"name\" is required" });
   });
 
   it('Retorna erro se o name possuir menos de 5 caracteres', async function () {
     const res = {};
     const req = { params: {}, body: { name: 'abcd'} };
-    const next = sinon.stub().returns();
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
     sinon.stub(productsServices, 'insertProduct').throws(errorInTheCharactersOfTheKeyName);
-    await productsControllers.addProduct(req, res, next);
-    expect(next).to.have.been.calledWith(errorInTheCharactersOfTheKeyName);
+    await productsControllers.addProduct(req, res);
+    expect(res.status).to.have.been.calledWith(422);
+    expect(res.json).to.have.been.calledWith({ "message": "\"name\" length must be at least 5 characters long" });
   });
 });
