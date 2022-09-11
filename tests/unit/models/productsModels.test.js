@@ -18,17 +18,13 @@ describe('Products Model', function () {
 
   it('Lista o produto pelo id', async function () {
     sinon.stub(connection, 'execute').resolves([productsMockFromDB[1]]);
-
     const response = await productsModel.findProductsByIdModel(2);
-
     expect(response).to.deep.equal(productsMockFromDB[1])
   });
 
   it('INSERT Products', async function () {
     sinon.stub(connection, 'execute').resolves([{ insertId: 4 }]);
-
     const response = await productsModel.insertProductModel('ProdutoX');
-
     expect(response).to.deep.equal({ insertId: 4 })
   });
 });

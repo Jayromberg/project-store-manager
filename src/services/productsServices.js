@@ -15,7 +15,6 @@ const findProductsByIdServices = async (id) => {
 
 const insertProductServices = async (newProduct) => {
   const { error } = productNameValidation(newProduct);
-  
   if (error) throw new Error(error.message);
 
   const { name } = newProduct;
