@@ -11,7 +11,9 @@ const { productsServices } = require('../../../src/services');
 const { servicesProductResponse,
   servicesProductResponseById,
   productNotFound,
-  insertedProduct } = require('./mocks/productsControllersMocks');
+  insertedProduct,
+  errorInKeyName,
+  errorInTheCharactersOfTheKeyName } = require('./mocks/productsControllersMocks');
 
 describe('Products Controllers', function () {
   afterEach(function () {
@@ -64,5 +66,27 @@ describe('Products Controllers', function () {
     await productsControllers.addProduct(req, res, next);
     expect(res.status).to.have.been.calledWith(201);
     expect(res.json).to.have.been.calledWith(insertedProduct);
+  });
+
+  it('Retorna erro se o name não existir', async function () {
+    const res = {};
+    const req = { params: {}, body: {} };
+    const next = sinon.stub().returns();
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(productsServices, 'insertProduct').throws(errorInKeyName);
+    await productsControllers.addProduct(req, res, next);
+    expect(next).to.have.been.calledWith(errorInKeyName);
+  });
+
+  it('Retorna erro se o name possuir menos de 5 caracteres', async function () {
+    const res = {};
+    const req = { params: {}, body: { name: 'abcd'} };
+    const next = sinon.stub().returns();
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(productsServices, 'insertProduct').throws(errorInTheCharactersOfTheKeyName);
+    await productsControllers.addProduct(req, res, next);
+    expect(next).to.have.been.calledWith(errorInTheCharactersOfTheKeyName);
   });
 });

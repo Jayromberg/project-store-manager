@@ -16,7 +16,7 @@ const getProductsByID = async (id) => {
 const insertProduct = async (newProduct) => {
   const { error } = productNameValidation(newProduct);
   
-  if (error) return error;
+  if (error) throw new Error(error.message);
 
   const { name } = newProduct;
   const { insertId } = await productsModel.InsertProduct(name);

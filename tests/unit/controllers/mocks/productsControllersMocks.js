@@ -25,11 +25,17 @@ const insertedProduct = {
   "name": "ProdutoX"
 }
 
-const productNotFound = new Error("Product not found");
+const productNotFound = new Error('PRODUCT_NOT_FOUND');
+
+const errorInKeyName = new Error('NAME_IS_REQUIRED');
+
+const errorInTheCharactersOfTheKeyName = new Error('INVALID_NAME');
 
 module.exports = {
   servicesProductResponse,
   servicesProductResponseById,
   productNotFound,
   insertedProduct,
+  errorInKeyName,
+  errorInTheCharactersOfTheKeyName,
 };
