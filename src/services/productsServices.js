@@ -1,30 +1,30 @@
 const { productsModel } = require('../models');
 const { productNameValidation } = require('./validations/productValidation');
 
-const getAllProducts = async () => {
-  const products = await productsModel.findAllProducts();
+const findAllProductsServices = async () => {
+  const products = await productsModel.findAllProductsModel();
   if (!products) throw new Error('INTERNAL_ERROR');
   return products;
 };
 
-const getProductsByID = async (id) => {
-  const product = await productsModel.findProductsById(id);
+const findProductsByIdServices = async (id) => {
+  const product = await productsModel.findProductsByIdModel(id);
   if (product.length === 0) throw new Error('PRODUCT_NOT_FOUND');
   return product;
 };
 
-const insertProduct = async (newProduct) => {
+const insertProductServices = async (newProduct) => {
   const { error } = productNameValidation(newProduct);
   
   if (error) throw new Error(error.message);
 
   const { name } = newProduct;
-  const { insertId } = await productsModel.InsertProduct(name);
+  const { insertId } = await productsModel.insertProductModel(name);
   return { id: insertId, name };
 };
 
 module.exports = {
-  getAllProducts,
-  getProductsByID,
-  insertProduct,
+  findAllProductsServices,
+  findProductsByIdServices,
+  insertProductServices,
 };

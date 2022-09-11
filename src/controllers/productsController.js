@@ -1,9 +1,9 @@
 const { productsServices } = require('../services');
 const mapError = require('../utils/mapError');
 
-const getAllProducts = async (_req, res) => {
+const findAllProductsControllers = async (_req, res) => {
   try {   
-    const result = await productsServices.getAllProducts();
+    const result = await productsServices.findAllProductsServices();
     res.status(200).json(result);
   } catch (error) {
     const err = mapError(error.message);
@@ -11,10 +11,10 @@ const getAllProducts = async (_req, res) => {
   }
 };
 
-const getProductsById = async (req, res) => {
+const findProductsByIdControllers = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await productsServices.getProductsByID(id);
+    const result = await productsServices.findProductsByIdServices(id);
     res.status(200).json(result[0]);
   } catch (error) {
     const err = mapError(error.message);
@@ -22,10 +22,10 @@ const getProductsById = async (req, res) => {
   }
 };
 
-const addProduct = async (req, res) => {
+const insertProductControllers = async (req, res) => {
   try {
     const newProduct = req.body;
-    const response = await productsServices.insertProduct(newProduct);
+    const response = await productsServices.insertProductServices(newProduct);
     res.status(201).json(response);
   } catch (error) {
     const err = mapError(error.message);
@@ -34,7 +34,7 @@ const addProduct = async (req, res) => {
 };
 
 module.exports = {
-  getAllProducts,
-  getProductsById,
-  addProduct,
+  findAllProductsControllers,
+  findProductsByIdControllers,
+  insertProductControllers,
 };

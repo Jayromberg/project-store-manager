@@ -11,54 +11,54 @@ describe('Products Services', function () {
   });
 
   it('Lista todos os produtos com sucesso', async function () {
-    sinon.stub(productsModel, 'findAllProducts').resolves(productResponse);
-    const products = await productsServices.getAllProducts();
+    sinon.stub(productsModel, 'findAllProductsModel').resolves(productResponse);
+    const products = await productsServices.findAllProductsServices();
     expect(products).to.deep.equal(productResponse);
   });
 
   it('Lista o produto pelo id com sucesso', async function () {
-    sinon.stub(productsModel, 'findProductsById').resolves(productResponse[1]);
-    const product = await productsServices.getProductsByID(2);
+    sinon.stub(productsModel, 'findProductsByIdModel').resolves(productResponse[1]);
+    const product = await productsServices.findProductsByIdServices(2);
     expect(product).to.deep.equal(productResponse[1])
   });
 
   it('Produto não encontrado', async function () {
-    sinon.stub(productsModel, 'findProductsById').resolves([]);
+    sinon.stub(productsModel, 'findProductsByIdModel').resolves([]);
     try {
-      await productsServices.getProductsByID(5)
+      await productsServices.findProductsByIdServices(5)
     } catch (error) {
       expect(error.message).to.be.equal('PRODUCT_NOT_FOUND');
     }
   });
 
   it('Resultado da pesquisa de produtos não encontrada', async function () {
-    sinon.stub(productsModel, 'findAllProducts').resolves(undefined);
+    sinon.stub(productsModel, 'findAllProductsModel').resolves(undefined);
     try {
-      await productsServices.getAllProducts();
+      await productsServices.findAllProductsServices();
     } catch (error) {
       expect(error.message).to.be.equal('INTERNAL_ERROR');
     }
   });
 
   it('Insere o produto no banco de dados', async function () {
-    sinon.stub(productsModel, 'InsertProduct').resolves({ insertId: 4 });
-    const product = await productsServices.insertProduct({ name: 'ProdutoX' });
+    sinon.stub(productsModel, 'insertProductModel').resolves({ insertId: 4 });
+    const product = await productsServices.insertProductServices({ name: 'ProdutoX' });
     expect(product).to.deep.equal(insertedProduct);
   });
 
   it('Name não informado', async function() {
-    sinon.stub(productsModel, 'InsertProduct').resolves(undefined);
+    sinon.stub(productsModel, 'insertProductModel').resolves(undefined);
     try {
-      await productsServices.insertProduct({})
+      await productsServices.insertProductServices({})
     } catch (error) {
       expect(error.message).to.be.equal('NAME_IS_REQUIRED');
     }
   });
 
   it('Name informado com menos de 5 caracteres', async function () {
-    sinon.stub(productsModel, 'InsertProduct').resolves(undefined);
+    sinon.stub(productsModel, 'insertProductModel').resolves(undefined);
     try {
-      await productsServices.insertProduct({ name: 'abcd'})
+      await productsServices.insertProductServices({ name: 'abcd'})
     } catch (error) {
       expect(error.message).to.be.equal('INVALID_NAME');
     }

@@ -26,8 +26,8 @@ describe('Products Controllers', function () {
     const req = {};
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
-    sinon.stub(productsServices, 'getAllProducts').resolves(servicesProductResponse);
-    await productsControllers.getAllProducts(req, res);
+    sinon.stub(productsServices, 'findAllProductsServices').resolves(servicesProductResponse);
+    await productsControllers.findAllProductsControllers(req, res);
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(servicesProductResponse);
   });
@@ -37,8 +37,8 @@ describe('Products Controllers', function () {
     const req = { params: { id: 2 }, body: {} };
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
-    sinon.stub(productsServices, 'getProductsByID').resolves(servicesProductResponseById);
-    await productsControllers.getProductsById(req, res);
+    sinon.stub(productsServices, 'findProductsByIdServices').resolves(servicesProductResponseById);
+    await productsControllers.findProductsByIdControllers(req, res);
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(servicesProductResponseById[0]);
   });
@@ -49,8 +49,8 @@ describe('Products Controllers', function () {
     const req = { params: { id: 999999999 }, body: {} };
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
-    sinon.stub(productsServices, 'getProductsByID').throws(productNotFound);
-    await productsControllers.getProductsById(req, res);
+    sinon.stub(productsServices, 'findProductsByIdServices').throws(productNotFound);
+    await productsControllers.findProductsByIdControllers(req, res);
     expect(res.status).to.have.been.calledWith(404);
     expect(res.json).to.have.been.calledWith({ "message": "Product not found" });
   });
@@ -60,8 +60,8 @@ describe('Products Controllers', function () {
     const req = { params: {}, body: {} };
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
-    sinon.stub(productsServices, 'getAllProducts').throws(genericError);
-    await productsControllers.getAllProducts(req, res);
+    sinon.stub(productsServices, 'findAllProductsServices').throws(genericError);
+    await productsControllers.findAllProductsControllers(req, res);
     expect(res.status).to.have.been.calledWith(500);
     expect(res.json).to.have.been.calledWith({ "message": "Internal error" });
   });
@@ -71,8 +71,8 @@ describe('Products Controllers', function () {
     const req = { params: {}, body: { "name": "ProdutoX" } };
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
-    sinon.stub(productsServices, 'insertProduct').resolves(insertedProduct);
-    await productsControllers.addProduct(req, res);
+    sinon.stub(productsServices, 'insertProductServices').resolves(insertedProduct);
+    await productsControllers.insertProductControllers(req, res);
     expect(res.status).to.have.been.calledWith(201);
     expect(res.json).to.have.been.calledWith(insertedProduct);
   });
@@ -82,8 +82,8 @@ describe('Products Controllers', function () {
     const req = { params: {}, body: {} };
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
-    sinon.stub(productsServices, 'insertProduct').throws(errorInKeyName);
-    await productsControllers.addProduct(req, res);
+    sinon.stub(productsServices, 'insertProductServices').throws(errorInKeyName);
+    await productsControllers.insertProductControllers(req, res);
     expect(res.status).to.have.been.calledWith(400);
     expect(res.json).to.have.been.calledWith({ "message": "\"name\" is required" });
   });
@@ -93,8 +93,8 @@ describe('Products Controllers', function () {
     const req = { params: {}, body: { "name": "abcd"} };
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
-    sinon.stub(productsServices, 'insertProduct').throws(errorInTheCharactersOfTheKeyName);
-    await productsControllers.addProduct(req, res);
+    sinon.stub(productsServices, 'insertProductServices').throws(errorInTheCharactersOfTheKeyName);
+    await productsControllers.insertProductControllers(req, res);
     expect(res.status).to.have.been.calledWith(422);
     expect(res.json).to.have.been.calledWith({ "message": "\"name\" length must be at least 5 characters long" });
   });

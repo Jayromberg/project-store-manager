@@ -12,14 +12,14 @@ describe('Products Model', function () {
 
   it('Lista todos os produtos', async function () {
     sinon.stub(connection, 'execute').resolves([productsMockFromDB]);
-    const response = await productsModel.findAllProducts();
+    const response = await productsModel.findAllProductsModel();
     expect(response).to.deep.equal(productsMockFromDB);
   });
 
   it('Lista o produto pelo id', async function () {
     sinon.stub(connection, 'execute').resolves([productsMockFromDB[1]]);
 
-    const response = await productsModel.findProductsById(2);
+    const response = await productsModel.findProductsByIdModel(2);
 
     expect(response).to.deep.equal(productsMockFromDB[1])
   });
@@ -27,7 +27,7 @@ describe('Products Model', function () {
   it('INSERT Products', async function () {
     sinon.stub(connection, 'execute').resolves([{ insertId: 4 }]);
 
-    const response = await productsModel.InsertProduct('ProdutoX');
+    const response = await productsModel.insertProductModel('ProdutoX');
 
     expect(response).to.deep.equal({ insertId: 4 })
   });
