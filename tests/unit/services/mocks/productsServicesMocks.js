@@ -18,6 +18,10 @@ const insertedProduct = {
   "name": "ProdutoX"
 }
 
+// const errorInKeyName = new Error('"name" is required');
+
+// const errorInTheCharactersOfTheKeyName = new Error('"name" length must be at least 5 characters long');
+
 module.exports = {
   productResponse,
   insertedProduct,

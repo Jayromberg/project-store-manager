@@ -33,7 +33,25 @@ describe('Products Services', function () {
 
   it('Insere o produto no banco de dados', async function () {
     sinon.stub(productsModel, 'InsertProduct').resolves({ insertId: 4 });
-    const product = await productsServices.insertProduct('ProdutoX');
+    const product = await productsServices.insertProduct({ name: 'ProdutoX' });
     expect(product).to.deep.equal(insertedProduct);
+  });
+
+  it('Name não informado', async function() {
+    sinon.stub(productsModel, 'InsertProduct').resolves(undefined);
+    try {
+      await productsServices.insertProduct({})
+    } catch (error) {
+      expect(error.message).to.be.equal('NAME_IS_REQUIRED');
+    }
+  });
+
+  it('Name informado com menos de 5 caracteres', async function () {
+    sinon.stub(productsModel, 'InsertProduct').resolves(undefined);
+    try {
+      await productsServices.insertProduct({})
+    } catch (error) {
+      expect(error.message).to.be.equal('INVALID_NAME');
+    }
   });
 });
