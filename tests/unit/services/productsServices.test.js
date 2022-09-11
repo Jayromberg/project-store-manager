@@ -49,7 +49,7 @@ describe('Products Services', function () {
   it('Name informado com menos de 5 caracteres', async function () {
     sinon.stub(productsModel, 'InsertProduct').resolves(undefined);
     try {
-      await productsServices.insertProduct({})
+      await productsServices.insertProduct({ name: 'abcd'})
     } catch (error) {
       expect(error.message).to.be.equal('INVALID_NAME');
     }
