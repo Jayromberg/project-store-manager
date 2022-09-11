@@ -27,6 +27,8 @@ const insertedProduct = {
 
 const productNotFound = new Error('PRODUCT_NOT_FOUND');
 
+const genericError = new Error('LALALAND');
+
 const errorInKeyName = new Error('NAME_IS_REQUIRED');
 
 const errorInTheCharactersOfTheKeyName = new Error('INVALID_NAME');
@@ -38,4 +40,5 @@ module.exports = {
   insertedProduct,
   errorInKeyName,
   errorInTheCharactersOfTheKeyName,
+  genericError,
 };

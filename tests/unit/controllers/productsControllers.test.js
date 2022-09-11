@@ -13,7 +13,8 @@ const { servicesProductResponse,
   productNotFound,
   insertedProduct,
   errorInKeyName,
-  errorInTheCharactersOfTheKeyName } = require('./mocks/productsControllersMocks');
+  errorInTheCharactersOfTheKeyName,
+  genericError} = require('./mocks/productsControllersMocks');
 
 describe('Products Controllers', function () {
   afterEach(function () {
@@ -54,6 +55,17 @@ describe('Products Controllers', function () {
     expect(res.json).to.have.been.calledWith({ "message": "Product not found" });
   });
 
+  it('Retorna erro 500 genérico, caso ocorra um erro desconhecido', async function () {
+    const res = {};
+    const req = { params: {}, body: {} };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(productsServices, 'getAllProducts').throws(genericError);
+    await productsControllers.getAllProducts(req, res);
+    expect(res.status).to.have.been.calledWith(500);
+    expect(res.json).to.have.been.calledWith({ "message": "Internal error" });
+  });
+
   it('Adiciona um produto no banco de dados', async function () {
     const res = {};
     const req = { params: {}, body: { "name": "ProdutoX" } };
@@ -78,7 +90,7 @@ describe('Products Controllers', function () {
 
   it('Retorna erro se o name possuir menos de 5 caracteres', async function () {
     const res = {};
-    const req = { params: {}, body: { name: 'abcd'} };
+    const req = { params: {}, body: { "name": "abcd"} };
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
     sinon.stub(productsServices, 'insertProduct').throws(errorInTheCharactersOfTheKeyName);
