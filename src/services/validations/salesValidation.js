@@ -25,7 +25,7 @@ const validateInputProductId = async (sales) => {
     .map((sale) => productsModel.findProductsByIdModel(sale.productId));
 
   const products = await Promise.all(generatePromises);
-  console.log(products);
+
   products.forEach(([product]) => {
     if (!product) {
       validate = false;
