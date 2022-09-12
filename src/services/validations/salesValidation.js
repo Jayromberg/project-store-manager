@@ -2,7 +2,7 @@ const Joi = require('joi');
 const { productsModel } = require('../../models');
 
 const salesValidation = (product) => {
-  const schema = Joi.object({
+  const schema = Joi.array().items({
     productId: Joi.number().required()
       .messages({
         'any.required': 'PRODUCT_ID_IS_REQUIRED',
@@ -13,7 +13,7 @@ const salesValidation = (product) => {
         'number.positive': 'INVALID_QUANTITY',
         'any.required': 'QUANTITY_IS_REQUIRED',
       }),
-  }).length(2);
+  });
 
   return schema.validate(product);
 };
@@ -25,7 +25,7 @@ const validateInputProductId = async (sales) => {
     .map((sale) => productsModel.findProductsByIdModel(sale.productId));
 
   const products = await Promise.all(generatePromises);
-
+  
   products.forEach(([product]) => {
     if (!product) {
       validate = false;
