@@ -7,7 +7,11 @@ const { objectWithTheProductsSold,
   objectWithSalesReturned,
   objectWithNonExistentProduct,
   successfulDBRequest,
-  objectWihMissingInput } = require('./mocks/salesServiceMcks');
+  objectWihMissingInput,
+  saleDateSurveyResponse,
+  saleSurveyResponse,
+  salesDataMock,
+  AllSalesDataMock } = require('./mocks/salesServiceMcks');
 
 describe('Sales Service', function () {
   afterEach(function () {
@@ -56,5 +60,23 @@ describe('Sales Service', function () {
     } catch (error) {
       expect(error.message).to.be.equal('PRODUCT_ID_IS_REQUIRED');
     }
+  });
+
+  it('Busca as vendas pelo id', async function () {
+    sinon.stub(salesModel, 'insertDateOfSalesModel').resolves(saleDateSurveyResponse);
+    sinon.stub(salesModel, 'insertSalesModel').resolves(saleSurveyResponse);
+
+    const salesData = await salesService.findSalesByIdService(2);
+
+    expect(salesData).to.deep.equal(salesDataMock);
+  });
+
+  it('Busca todas as vendas', async function () {
+    sinon.stub(salesModel, 'insertDateOfSalesModel').resolves(saleDateSurveyResponse);
+    sinon.stub(salesModel, 'insertSalesModel').resolves(saleSurveyResponse);
+
+    const AllSalesData = await salesService.findAllSalesService();
+
+    expect(AllSalesData).to.deep.equal(AllSalesDataMock);
   });
 });

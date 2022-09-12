@@ -36,4 +36,15 @@ describe('Sales Model', function () {
     const response = await salesModel.findSalesByIdModel(2);
     expect(response).to.deep.equal(saleSurveyResponse)
   });
+  it('Lista todas as datas de venda', async function () {
+    sinon.stub(connection, 'execute').resolves([saleDateSurveyResponse]);
+    const response = await salesModel.findAllDateOfSalesModel();
+    expect(response).to.deep.equal(saleDateSurveyResponse)
+  });
+
+  it('Lista todas as vendas', async function () {
+    sinon.stub(connection, 'execute').resolves([saleSurveyResponse]);
+    const response = await salesModel.findAllSalesModel();
+    expect(response).to.deep.equal(saleSurveyResponse)
+  });
 });
