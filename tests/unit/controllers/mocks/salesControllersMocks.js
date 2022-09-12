@@ -23,7 +23,10 @@ const objectWithSalesReturned = {
   ]
 }
 
+const errorInKeyProductId = new Error('QUANTITY_IS_REQUIRED');
+
 module.exports = {
   objectWithTheProductsSold,
   objectWithSalesReturned,
+  errorInKeyProductId,
 };
