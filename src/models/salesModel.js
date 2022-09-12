@@ -24,7 +24,25 @@ const insertSalesModel = async (id, products) => {
   return insertId;
 };
 
+const findDateOfSalesByIdModel = async (id) => {
+  const [result] = await connection.execute(
+    'SELECT * FROM StoreManager.sales WHERE id = ? ;', [id],
+  );
+
+  return result;
+};
+
+const findSalesByIdModel = async (id) => {
+  const [result] = await connection.execute(
+    'SELECT * FROM StoreManager.sales_products WHERE sale_id = ? ;', [id],
+  );
+
+  return result;
+};
+
 module.exports = {
   insertDateOfSalesModel,
   insertSalesModel,
+  findDateOfSalesByIdModel,
+  findSalesByIdModel,
 };
