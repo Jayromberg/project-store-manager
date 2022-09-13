@@ -46,6 +46,9 @@ const findSalesByIdService = async (id) => {
   const salesData = salesModel.findSalesByIdModel(id);
   const result = await Promise.all([dateSaleData, salesData]);
   const [[date], sales] = camelize(result);
+
+  if (!date) throw new Error('SALE_NOT_FOUND');
+  
   const resultJoin = sales.map((sale) => {
     const newObj = {
           date: date.date,

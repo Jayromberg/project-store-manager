@@ -23,6 +23,10 @@ const errorMap = {
     code: 422,
     message: '"quantity" must be greater than or equal to 1',
   },
+  SALE_NOT_FOUND: {
+    code: 404,
+    message: 'Sale not found',
+  },
 };
 
 const mapError = (type) => errorMap[type] || { code: 500, message: 'Internal error' };
