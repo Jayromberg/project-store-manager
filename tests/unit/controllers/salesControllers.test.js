@@ -48,7 +48,7 @@ describe('Sales Controller', function () {
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
     sinon.stub(salesService, 'findAllSalesService').resolves(allSalesReturned);
-    await productsControllers.findAllSalesController(req, res);
+    await salesController.findAllSalesController(req, res);
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(allSalesReturned);
   });
@@ -59,7 +59,7 @@ describe('Sales Controller', function () {
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
     sinon.stub(salesService, 'findSalesByIdService').resolves(salesByIdReturned);
-    await productsControllers.findProductsByIdControllers(req, res);
+    await salesController.findProductsByIdControllers(req, res);
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(salesByIdReturned);
   });

@@ -12,6 +12,29 @@ const insertSalesController = async (req, res) => {
   }
 };
 
+const findAllSalesController = async (_req, res) => {
+  try {
+    const response = await salesService.findAllSalesService();
+    res.status(200).json(response);
+  } catch (error) {
+    const err = mapError(error.message);
+    res.status(err.code).json({ message: err.message });
+  }
+};
+
+const findProductsByIdControllers = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const response = await salesService.findSalesByIdService(id);
+    res.status(200).json(response);
+  } catch (error) {
+    const err = mapError(error.message);
+    res.status(err.code).json({ message: err.message });
+  }
+};
+
 module.exports = {
   insertSalesController,
+  findAllSalesController,
+  findProductsByIdControllers,
 };
