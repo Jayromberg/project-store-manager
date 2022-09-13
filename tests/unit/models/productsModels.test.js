@@ -30,7 +30,7 @@ describe('Products Model', function () {
 
   it('UPDATE Product', async function () {
     sinon.stub(connection, 'execute').resolves([{ affectedRow: 1 }])
-    const update = await productsModel.updateProduct(1, 'ProdutZ');
+    const update = await productsModel.updateProduct(1, "Martelo do Batman");
     expect(update).to.deep.equal({ affectedRow: 1 });
   });
 });

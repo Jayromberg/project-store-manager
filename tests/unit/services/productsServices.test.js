@@ -3,7 +3,9 @@ const sinon = require('sinon');
 
 const productsModel = require('../../../src/models/productsModel');
 const { productsServices } = require('../../../src/services');
-const { productResponse, insertedProduct } = require('./mocks/productsServicesMocks');
+const { productResponse,
+  insertedProduct,
+  responseUpdateMock } = require('./mocks/productsServicesMocks');
 
 describe('Products Services', function () {
   afterEach(function () {
@@ -62,5 +64,12 @@ describe('Products Services', function () {
     } catch (error) {
       expect(error.message).to.be.equal('INVALID_NAME');
     }
+  });
+
+  it('update do product', async function () {
+    sinon.stub(productsModel, 'updateProduct').resolves({ affectedRow: 1 });
+    sinon.stub(productsModel, 'findProductsByIdModel').resolves(productResponse[1]);
+    const response = await productsServices.updateProductService(1, "Martelo do Batman");
+    expect(response).to.deep.equal(responseUpdateMock);
   });
 });

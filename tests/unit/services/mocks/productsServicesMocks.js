@@ -18,7 +18,13 @@ const insertedProduct = {
   "name": "ProdutoX"
 }
 
+const responseUpdateMock = {
+  "id": 1,
+  "name": "Martelo do Batman"
+}
+
 module.exports = {
   productResponse,
   insertedProduct,
+  responseUpdateMock,
 };
