@@ -106,6 +106,7 @@ describe('Products Controllers', function () {
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
     sinon.stub(productsServices, 'updateProductService').resolves(responseUpdateMock);
+    await productsControllers.updateProductController(req, res);
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(responseUpdateMock);
   })

@@ -33,8 +33,21 @@ const insertProductControllers = async (req, res) => {
   }
 };
 
+const updateProductController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name } = req.body;
+    const response = await productsServices.updateProductService(id, name);
+    res.status(200).json(response);
+  } catch (error) {
+    const err = mapError(error.message);
+    res.status(err.code).json({ message: err.message });
+  }
+};
+
 module.exports = {
   findAllProductsControllers,
   findProductsByIdControllers,
   insertProductControllers,
+  updateProductController,
 };
