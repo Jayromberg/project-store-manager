@@ -22,8 +22,20 @@ const insertProductServices = async (newProduct) => {
   return { id: insertId, name };
 };
 
+const updateProductService = async (id, name) => {
+  const { affectedRow } = await productsModel.updateProduct(id, name);
+
+  if (affectedRow === 1) {
+    const product = productsModel.findProductsByIdModel(id);
+    return product;
+  }
+  
+  return [];
+};
+
 module.exports = {
   findAllProductsServices,
   findProductsByIdServices,
   insertProductServices,
+  updateProductService,
 };
