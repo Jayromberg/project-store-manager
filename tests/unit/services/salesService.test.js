@@ -67,18 +67,24 @@ describe('Sales Service', function () {
   it('Busca as vendas pelo id', async function () {
     sinon.stub(salesModel, 'findDateOfSalesByIdModel').resolves(dateSearchResponseById);
     sinon.stub(salesModel, 'findSalesByIdModel').resolves(saleSearchAnswerById);
-
     const salesData = await salesService.findSalesByIdService(2);
-
     expect(salesData).to.deep.equal(salesDataMock);
   });
 
   it('Busca todas as vendas', async function () {
     sinon.stub(salesModel, 'findAllDateOfSalesModel').resolves(saleDateSurveyResponse);
     sinon.stub(salesModel, 'findAllSalesModel').resolves(saleSurveyResponse);
-
     const AllSalesData = await salesService.findAllSalesService();
-
     expect(AllSalesData).to.deep.equal(AllSalesDataMock);
+  });
+
+  it('Retorna erro caso não exista venda com o id consultado', async function () {
+    try {
+      sinon.stub(salesModel, 'findDateOfSalesByIdModel').resolves([]);
+      sinon.stub(salesModel, 'findSalesByIdModel').resolves([]);
+      await salesService.findSalesByIdService(2);
+    } catch (error) {
+      expect(error.message).to.be.equal('SALE_NOT_FOUND');
+    }
   });
 });

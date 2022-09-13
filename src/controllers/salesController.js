@@ -22,7 +22,7 @@ const findAllSalesController = async (_req, res) => {
   }
 };
 
-const findProductsByIdControllers = async (req, res) => {
+const findSaleByIdControllers = async (req, res) => {
   try {
     const { id } = req.params;
     const response = await salesService.findSalesByIdService(id);
@@ -36,5 +36,5 @@ const findProductsByIdControllers = async (req, res) => {
 module.exports = {
   insertSalesController,
   findAllSalesController,
-  findProductsByIdControllers,
+  findSaleByIdControllers,
 };

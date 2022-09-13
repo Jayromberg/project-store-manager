@@ -12,7 +12,9 @@ const { objectWithTheProductsSold,
   objectWithSalesReturned,
   errorInKeyProductId,
   allSalesReturned,
-  salesByIdReturned } = require('./mocks/salesControllersMocks');
+  salesByIdReturned,
+  saleNotFound,
+  genericError } = require('./mocks/salesControllersMocks');
 
 
 describe('Sales Controller', function () {
@@ -59,8 +61,30 @@ describe('Sales Controller', function () {
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
     sinon.stub(salesService, 'findSalesByIdService').resolves(salesByIdReturned);
-    await salesController.findProductsByIdControllers(req, res);
+    await salesController.findSaleByIdControllers(req, res);
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(salesByIdReturned);
+  });
+
+  it('Retorna erro 500 genérico, caso ocorra um erro desconhecido', async function () {
+    const res = {};
+    const req = { params: {}, body: {} };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(salesService, 'findAllSalesService').throws(genericError);
+    await salesController.findAllSalesController(req, res);
+    expect(res.status).to.have.been.calledWith(500);
+    expect(res.json).to.have.been.calledWith({ "message": "Internal error" });
+  });
+
+  it('Retorna erro caso não tenha venda com o id informado', async function () {
+    const res = {};
+    const req = { params: { id: 2 }, body: {} };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(salesService, 'findSalesByIdService').throws(saleNotFound);
+    await salesController.findSaleByIdControllers(req, res);
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith({ "message": "Sale not found" });
   });
 });

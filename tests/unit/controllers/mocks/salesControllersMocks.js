@@ -59,10 +59,16 @@ const salesByIdReturned = [
   }
 ];
 
+const saleNotFound = new Error('SALE_NOT_FOUND');
+
+const genericError = new Error('LALALAND');
+
 module.exports = {
   objectWithTheProductsSold,
   objectWithSalesReturned,
   errorInKeyProductId,
   allSalesReturned,
   salesByIdReturned,
+  saleNotFound,
+  genericError,
 };
