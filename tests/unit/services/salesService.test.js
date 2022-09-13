@@ -11,7 +11,9 @@ const { objectWithTheProductsSold,
   saleDateSurveyResponse,
   saleSurveyResponse,
   salesDataMock,
-  AllSalesDataMock } = require('./mocks/salesServiceMcks');
+  AllSalesDataMock,
+  dateSearchResponseById,
+  saleSearchAnswerById } = require('./mocks/salesServiceMcks');
 
 describe('Sales Service', function () {
   afterEach(function () {
@@ -63,8 +65,8 @@ describe('Sales Service', function () {
   });
 
   it('Busca as vendas pelo id', async function () {
-    sinon.stub(salesModel, 'findDateOfSalesByIdModel').resolves(saleDateSurveyResponse);
-    sinon.stub(salesModel, 'findSalesByIdModel').resolves(saleSurveyResponse);
+    sinon.stub(salesModel, 'findDateOfSalesByIdModel').resolves(dateSearchResponseById);
+    sinon.stub(salesModel, 'findSalesByIdModel').resolves(saleSearchAnswerById);
 
     const salesData = await salesService.findSalesByIdService(2);
 

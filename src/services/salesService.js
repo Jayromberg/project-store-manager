@@ -21,18 +21,18 @@ const insertSalesService = async (sales) => {
 };
 
 const findAllSalesService = async () => {
-  const DateSaleData = salesModel.findAllDateOfSalesModel();
+  const dateSaleData = salesModel.findAllDateOfSalesModel();
   const salesData = salesModel.findAllSalesModel();
-  const result = await Promise.all([DateSaleData, salesData]);
-  const [data1, data2] = camelize(result);
-  const resultJoin = data2.map((sales) => {
+  const result = await Promise.all([dateSaleData, salesData]);
+  const [date, sales] = camelize(result);
+  const resultJoin = sales.map((sale) => {
     let newObj;
-    data1.forEach((dateInfo) => {
-      if (sales.saleId === dateInfo.id) {
+    date.forEach((dateInfo) => {
+      if (sale.saleId === dateInfo.id) {
         newObj = {
-          saleId: sales.saleId,
+          saleId: sale.saleId,
           date: dateInfo.date,
-          ...sales,
+          ...sale,
         };
       }
     });
@@ -41,7 +41,25 @@ const findAllSalesService = async () => {
   return resultJoin;
 };
 
+const findSalesByIdService = async (id) => {
+  const dateSaleData = salesModel.findDateOfSalesByIdModel(id);
+  const salesData = salesModel.findSalesByIdModel(id);
+  const result = await Promise.all([dateSaleData, salesData]);
+  const [[date], sales] = camelize(result);
+  const resultJoin = sales.map((sale) => {
+    const newObj = {
+          date: date.date,
+          productId: sale.productId,
+          quantity: sale.quantity,
+        };
+    return newObj;
+  });
+
+  return resultJoin;
+};
+
 module.exports = {
   insertSalesService,
   findAllSalesService,
+  findSalesByIdService,
 };

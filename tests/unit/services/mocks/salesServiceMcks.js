@@ -49,14 +49,14 @@ const objectWihMissingInput = [
   }
 ]
 
-const saleDateSurveyResponse = [
+const dateSearchResponseById = [
   {
     id: 2,
     date: '2022-09-12 15:09:17',
   }
 ];
 
-const saleSurveyResponse = [
+const saleSearchAnswerById = [
   {
     sale_id: 2,
     product_id: 3,
@@ -71,14 +71,43 @@ const saleSurveyResponse = [
 
 const salesDataMock = [
   {
-    "date": "2021-09-09T04:54:29.000Z",
-    "productId": 1,
-    "quantity": 2
+    "date": "2022-09-12 15:09:17",
+    "productId": 3,
+    "quantity": 15
   },
   {
-    "date": "2021-09-09T04:54:54.000Z",
+    "date": "2022-09-12 15:09:17",
     "productId": 2,
-    "quantity": 2
+    "quantity": 10
+  }
+];
+
+const saleDateSurveyResponse = [
+  {
+    id: 2,
+    date: '2022-09-12 15:09:17',
+  },
+  {
+    id: 3,
+    date: '2022-09-12 15:09:30',
+  }
+];
+
+const saleSurveyResponse = [
+  {
+    sale_id: 2,
+    product_id: 3,
+    quantity: 15,
+  },
+  {
+    sale_id: 2,
+    product_id: 2,
+    quantity: 10,
+  },
+  {
+    sale_id: 3,
+    product_id: 2,
+    quantity: 10,
   }
 ];
 
@@ -94,6 +123,12 @@ const AllSalesDataMock = [
     "date": "2022-09-12 15:09:17",
     "productId": 2,
     "quantity": 10
+  },
+  {
+    "saleId": 3,
+    "date": "2022-09-12 15:09:30",
+    "productId": 2,
+    "quantity": 10
   }
 ];
 
@@ -107,4 +142,6 @@ module.exports = {
   saleSurveyResponse,
   salesDataMock,
   AllSalesDataMock,
+  dateSearchResponseById,
+  saleSearchAnswerById,
 };
