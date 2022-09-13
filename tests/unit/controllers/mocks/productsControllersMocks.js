@@ -33,6 +33,11 @@ const errorInKeyName = new Error('NAME_IS_REQUIRED');
 
 const errorInTheCharactersOfTheKeyName = new Error('INVALID_NAME');
 
+const responseUpdateMock = {
+  "id": 1,
+  "name": "Martelo do Batman"
+}
+
 module.exports = {
   servicesProductResponse,
   servicesProductResponseById,
@@ -41,4 +46,5 @@ module.exports = {
   errorInKeyName,
   errorInTheCharactersOfTheKeyName,
   genericError,
+  responseUpdateMock,
 };

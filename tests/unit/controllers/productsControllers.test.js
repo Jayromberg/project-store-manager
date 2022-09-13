@@ -14,7 +14,8 @@ const { servicesProductResponse,
   insertedProduct,
   errorInKeyName,
   errorInTheCharactersOfTheKeyName,
-  genericError} = require('./mocks/productsControllersMocks');
+  genericError,
+  responseUpdateMock } = require('./mocks/productsControllersMocks');
 
 describe('Products Controllers', function () {
   afterEach(function () {
@@ -98,4 +99,14 @@ describe('Products Controllers', function () {
     expect(res.status).to.have.been.calledWith(422);
     expect(res.json).to.have.been.calledWith({ "message": "\"name\" length must be at least 5 characters long" });
   });
+
+  it('Atualizar um produto', async function () {
+    const res = {};
+    const req = { params: { id: 1 }, body: { "name": "Martelo do Batman" } };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(productsServices, 'updateProductService').resolves(responseUpdateMock);
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(responseUpdateMock);
+  })
 });
