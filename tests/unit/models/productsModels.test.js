@@ -27,4 +27,10 @@ describe('Products Model', function () {
     const response = await productsModel.insertProductModel('ProdutoX');
     expect(response).to.deep.equal({ insertId: 4 })
   });
+
+  it('UPDATE Product', async function () {
+    sinon.stub(connection, 'execute').resolves([{ affectedRow: 1 }])
+    const update = await productsModel.updateProduct(1, 'ProdutZ');
+    expect(update).to.deep.equal({ affectedRow: 1 });
+  });
 });
