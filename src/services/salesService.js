@@ -1,4 +1,6 @@
 const snakeize = require('snakeize');
+const camelize = require('camelize');
+
 const { salesModel } = require('../models');
 const { salesValidation, validateInputProductId } = require('./validations/salesValidation');
 
@@ -18,6 +20,28 @@ const insertSalesService = async (sales) => {
   return { id: insertId, itemsSold: sales };
 };
 
+const findAllSalesService = async () => {
+  const DateSaleData = salesModel.findAllDateOfSalesModel();
+  const salesData = salesModel.findAllSalesModel();
+  const result = await Promise.all([DateSaleData, salesData]);
+  const [data1, data2] = camelize(result);
+  const resultJoin = data2.map((sales) => {
+    let newObj;
+    data1.forEach((dateInfo) => {
+      if (sales.saleId === dateInfo.id) {
+        newObj = {
+          saleId: sales.saleId,
+          date: dateInfo.date,
+          ...sales,
+        };
+      }
+    });
+    return newObj;
+  });
+  return resultJoin;
+};
+
 module.exports = {
   insertSalesService,
+  findAllSalesService,
 };

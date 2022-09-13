@@ -63,8 +63,8 @@ describe('Sales Service', function () {
   });
 
   it('Busca as vendas pelo id', async function () {
-    sinon.stub(salesModel, 'insertDateOfSalesModel').resolves(saleDateSurveyResponse);
-    sinon.stub(salesModel, 'insertSalesModel').resolves(saleSurveyResponse);
+    sinon.stub(salesModel, 'findDateOfSalesByIdModel').resolves(saleDateSurveyResponse);
+    sinon.stub(salesModel, 'findSalesByIdModel').resolves(saleSurveyResponse);
 
     const salesData = await salesService.findSalesByIdService(2);
 
@@ -72,8 +72,8 @@ describe('Sales Service', function () {
   });
 
   it('Busca todas as vendas', async function () {
-    sinon.stub(salesModel, 'insertDateOfSalesModel').resolves(saleDateSurveyResponse);
-    sinon.stub(salesModel, 'insertSalesModel').resolves(saleSurveyResponse);
+    sinon.stub(salesModel, 'findAllDateOfSalesModel').resolves(saleDateSurveyResponse);
+    sinon.stub(salesModel, 'findAllSalesModel').resolves(saleSurveyResponse);
 
     const AllSalesData = await salesService.findAllSalesService();
 

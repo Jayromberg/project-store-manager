@@ -49,10 +49,12 @@ const objectWihMissingInput = [
   }
 ]
 
-const saleDateSurveyResponse = {
-  id: 2,
-  date: '2022-09-12 15:09:17',
-};
+const saleDateSurveyResponse = [
+  {
+    id: 2,
+    date: '2022-09-12 15:09:17',
+  }
+];
 
 const saleSurveyResponse = [
   {
@@ -82,16 +84,16 @@ const salesDataMock = [
 
 const AllSalesDataMock = [
   {
-    "saleId": 1,
-    "date": "2021-09-09T04:54:29.000Z",
-    "productId": 1,
-    "quantity": 2
+    "saleId": 2,
+    "date": "2022-09-12 15:09:17",
+    "productId": 3,
+    "quantity": 15
   },
   {
-    "saleId": 1,
-    "date": "2021-09-09T04:54:54.000Z",
+    "saleId": 2,
+    "date": "2022-09-12 15:09:17",
     "productId": 2,
-    "quantity": 2
+    "quantity": 10
   }
 ];
 
