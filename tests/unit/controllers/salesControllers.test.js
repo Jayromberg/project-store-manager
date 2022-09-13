@@ -10,7 +10,9 @@ const salesController = require('../../../src/controllers/salesController');
 const { salesService } = require('../../../src/services');
 const { objectWithTheProductsSold,
   objectWithSalesReturned,
-  errorInKeyProductId } = require('./mocks/salesControllersMocks');
+  errorInKeyProductId,
+  allSalesReturned,
+  salesByIdReturned } = require('./mocks/salesControllersMocks');
 
 
 describe('Sales Controller', function () {
@@ -38,5 +40,27 @@ describe('Sales Controller', function () {
     await salesController.insertSalesController(req, res);
     expect(res.status).to.have.been.calledWith(400);
     expect(res.json).to.have.been.calledWith({ "message": '"quantity" is required' });
+  });
+
+  it('Busca todos as vendas', async function () {
+    const res = {};
+    const req = {};
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(salesService, 'findAllSalesService').resolves(allSalesReturned);
+    await productsControllers.findAllSalesController(req, res);
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(allSalesReturned);
+  });
+
+  it('Busca a venda pelo id', async function () {
+    const res = {};
+    const req = { params: { id: 2 }, body: {} };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(salesService, 'findSalesByIdService').resolves(salesByIdReturned);
+    await productsControllers.findProductsByIdControllers(req, res);
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(salesByIdReturned);
   });
 });
