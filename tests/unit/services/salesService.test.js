@@ -99,7 +99,7 @@ describe('Sales Service', function () {
     try {
       await salesService.deleteSaleService(1);
     } catch (error) {
-      expect(error.message).to.be.equal('PRODUCT_NOT_FOUND');
+      expect(error.message).to.be.equal('SALE_NOT_FOUND');
     }
   });
 });
