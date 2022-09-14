@@ -121,4 +121,25 @@ describe('Products Controllers', function () {
     expect(res.status).to.have.been.calledWith(400);
     expect(res.json).to.have.been.calledWith({ "message": "\"name\" is required" });
   });
+
+  it('Retorna erro ao tentar deletar um produto com id invalido', async function () {
+    const res = {};
+    const req = { params: { id: 999999999 }, body: {} };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(productsServices, 'deleteProductService').throws(productNotFound);
+    await productsControllers.deleteProductController(req, res);
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith({ "message": "Product not found" });
+  });
+  it('Verifica o status ao deletar um produto', async function () {
+    const res = {};
+    const req = { params: { id: 1 }, body: {} };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(productsServices, 'deleteProductService').resolves();
+    await productsControllers.deleteProductController(req, res);
+    expect(res.status).to.have.been.calledWith(204);
+    expect(res.json).to.have.been.calledWith();
+  });
 });
