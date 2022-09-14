@@ -23,14 +23,16 @@ const insertProductServices = async (newProduct) => {
 };
 
 const updateProductService = async (id, name) => {
-  const { affectedRow } = await productsModel.updateProduct(id, name);
+  const { error } = productNameValidation(name);
+  if (error) throw new Error(error.message);
 
-  if (affectedRow === 1) {
-    const product = productsModel.findProductsByIdModel(id);
-    return product;
+  const { affectedRows } = await productsModel.updateProduct(id, name);
+  if (affectedRows === 1) {
+    const [newProduct] = await productsModel.findProductsByIdModel(id);
+    return newProduct;
   }
   
-  return [];
+  throw new Error('PRODUCT_NOT_FOUND');
 };
 
 module.exports = {

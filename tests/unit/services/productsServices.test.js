@@ -67,9 +67,9 @@ describe('Products Services', function () {
   });
 
   it('update do product', async function () {
-    sinon.stub(productsModel, 'updateProduct').resolves({ affectedRow: 1 });
-    sinon.stub(productsModel, 'findProductsByIdModel').resolves(responseUpdateMock);
-    const response = await productsServices.updateProductService(1, "Martelo do Batman");
+    sinon.stub(productsModel, 'updateProduct').resolves({ affectedRows: 1 });
+    sinon.stub(productsModel, 'findProductsByIdModel').resolves([responseUpdateMock]);
+    const response = await productsServices.updateProductService(1 , { "name":"Martelo do Batman" });
     expect(response).to.deep.equal(responseUpdateMock);
   });
 });

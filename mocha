@@ -1,0 +1,4 @@
+
+> sd-0x-store-manager@1.0.0 test
+> jest --config ./jest.config.js --runInBand --detectOpenHandles
+

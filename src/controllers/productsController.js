@@ -36,8 +36,7 @@ const insertProductControllers = async (req, res) => {
 const updateProductController = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name } = req.body;
-    const response = await productsServices.updateProductService(id, name);
+    const response = await productsServices.updateProductService(id, req.body);
     res.status(200).json(response);
   } catch (error) {
     const err = mapError(error.message);

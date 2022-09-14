@@ -25,7 +25,7 @@ const insertProductModel = async (productName) => {
   return insertId;
 };
 
-const updateProduct = async (id, name) => {
+const updateProduct = async (id, { name }) => {
   const [update] = await connection.execute(
     'UPDATE StoreManager.products SET name = ? WHERE id = ? ;',
     [name, id],
