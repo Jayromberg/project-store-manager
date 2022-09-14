@@ -72,4 +72,24 @@ describe('Products Services', function () {
     const response = await productsServices.updateProductService(1 , { "name":"Martelo do Batman" });
     expect(response).to.deep.equal(responseUpdateMock);
   });
+
+  it('Produto não encontrado ao atualizar', async function () {
+    sinon.stub(productsModel, 'updateProduct').resolves({ affectedRows: 0 });
+    sinon.stub(productsModel, 'findProductsByIdModel').resolves([]);
+    try {
+      await productsServices.updateProductService(99999999, { "name": "Martelo do Batman" });
+    } catch (error) {
+      expect(error.message).to.be.equal('PRODUCT_NOT_FOUND');
+    }
+  });
+
+  it('Name não informado ao atualizar', async function () {
+    sinon.stub(productsModel, 'updateProduct').resolves({ affectedRows: 0 });
+    sinon.stub(productsModel, 'findProductsByIdModel').resolves([]);
+    try {
+      await productsServices.updateProductService(1, {});
+    } catch (error) {
+      expect(error.message).to.be.equal('NAME_IS_REQUIRED');
+    }
+  });
 });

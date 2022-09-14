@@ -110,4 +110,15 @@ describe('Products Controllers', function () {
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(responseUpdateMock);
   })
+
+  it('Retorna erro se o name não for informado ao atualizar.', async function () {
+    const res = {};
+    const req = { params: {}, body: {} };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(productsServices, 'insertProductServices').throws(errorInKeyName);
+    await productsControllers.updateProductController(req, res);
+    expect(res.status).to.have.been.calledWith(400);
+    expect(res.json).to.have.been.calledWith({ "message": "\"name\" is required" });
+  });
 });
