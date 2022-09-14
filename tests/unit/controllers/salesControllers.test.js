@@ -87,4 +87,25 @@ describe('Sales Controller', function () {
     expect(res.status).to.have.been.calledWith(404);
     expect(res.json).to.have.been.calledWith({ "message": "Sale not found" });
   });
+
+  it('Retorna erro ao tentar deletar uma venda com id invalido', async function () {
+    const res = {};
+    const req = { params: { id: 999999999 }, body: {} };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(salesService, 'deleteSaleService').throws(saleNotFound);
+    await salesController.deleteSaleController(req, res);
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith({ "message": "Sale not found" });
+  });
+  it('Verifica o status ao deletar um produto', async function () {
+    const res = {};
+    const req = { params: { id: 1 }, body: {} };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(salesService, 'deleteSaleService').resolves();
+    await salesController.deleteSaleController(req, res);
+    expect(res.status).to.have.been.calledWith(204);
+    expect(res.json).to.have.been.calledWith();
+  });
 });

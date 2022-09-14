@@ -64,7 +64,7 @@ const findSalesByIdService = async (id) => {
 const deleteSaleService = async (id) => {
   const { affectedRows } = await salesModel.deleteSale(id);
 
-  if (affectedRows === 0) throw new Error('PRODUCT_NOT_FOUND');
+  if (affectedRows === 0) throw new Error('SALE_NOT_FOUND');
 
   return [];
 };

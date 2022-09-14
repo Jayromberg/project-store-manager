@@ -33,8 +33,20 @@ const findSaleByIdControllers = async (req, res) => {
   }
 };
 
+const deleteSaleController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await salesService.deleteSaleService(id);
+    res.status(204).end();
+  } catch (error) {
+    const err = mapError(error.message);
+    res.status(err.code).json({ message: err.message });
+  }
+};
+
 module.exports = {
   insertSalesController,
   findAllSalesController,
   findSaleByIdControllers,
+  deleteSaleController,
 };
