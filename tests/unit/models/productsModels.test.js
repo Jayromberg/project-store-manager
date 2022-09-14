@@ -34,7 +34,7 @@ describe('Products Model', function () {
     expect(update).to.deep.equal({ affectedRows: 1 });
   });
 
-  it('UPDATE Product', async function () {
+  it('DELETE Product', async function () {
     sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }])
     const result = await productsModel.deleteProduct(1);
     expect(result).to.deep.equal({ affectedRows: 1 });

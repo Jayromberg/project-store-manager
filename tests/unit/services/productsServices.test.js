@@ -92,4 +92,19 @@ describe('Products Services', function () {
       expect(error.message).to.be.equal('NAME_IS_REQUIRED');
     }
   });
+
+  it('deletar um produto', async function () {
+    sinon.stub(productsModel, 'deleteProduct').resolves({ affectedRows: 1 });
+    const response = await productsServices.deleteProductService(1);
+    expect(response).to.deep.equal([]);
+  });
+
+  it('Produto não encontrado ao deletar', async function () {
+    sinon.stub(productsModel, 'deleteProduct').resolves({ affectedRows: 0 });
+    try {
+      await productsServices.deleteProductService(1);
+    } catch (error) {
+      expect(error.message).to.be.equal('PRODUCT_NOT_FOUND');
+    }
+  });
 });
