@@ -47,4 +47,10 @@ describe('Sales Model', function () {
     const response = await salesModel.findAllSalesModel();
     expect(response).to.deep.equal(saleSurveyResponse)
   });
+
+  it('DELETE Sales', async function () {
+    sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }])
+    const result = await salesModel.deleteSale(1);
+    expect(result).to.deep.equal({ affectedRows: 1 });
+  });
 });
