@@ -61,8 +61,17 @@ const findSalesByIdService = async (id) => {
   return resultJoin;
 };
 
+const deleteSaleService = async (id) => {
+  const { affectedRows } = await salesModel.deleteSale(id);
+
+  if (affectedRows === 0) throw new Error('PRODUCT_NOT_FOUND');
+
+  return [];
+};
+
 module.exports = {
   insertSalesService,
   findAllSalesService,
   findSalesByIdService,
+  deleteSaleService,
 };

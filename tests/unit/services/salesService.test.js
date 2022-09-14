@@ -87,4 +87,19 @@ describe('Sales Service', function () {
       expect(error.message).to.be.equal('SALE_NOT_FOUND');
     }
   });
+
+  it('deletar uma venda', async function () {
+    sinon.stub(salesModel, 'deleteSale').resolves({ affectedRows: 1 });
+    const response = await salesService.deleteSaleService(1);
+    expect(response).to.deep.equal([]);
+  });
+
+  it('Venda não encontrado ao deletar', async function () {
+    sinon.stub(salesModel, 'deleteSale').resolves({ affectedRows: 0 });
+    try {
+      await salesService.deleteSaleService(1);
+    } catch (error) {
+      expect(error.message).to.be.equal('PRODUCT_NOT_FOUND');
+    }
+  });
 });
