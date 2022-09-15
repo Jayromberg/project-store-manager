@@ -108,4 +108,50 @@ describe('Sales Controller', function () {
     expect(res.status).to.have.been.calledWith(204);
     expect(res.json).to.have.been.calledWith();
   });
+
+  it('Atualizar uma venda', async function () {
+    const res = {};
+    const req = {
+      params: { id: 1 }, body: [
+        {
+          "productId": 1,
+          "quantity": 10
+        },
+        {
+          "productId": 2,
+          "quantity": 50
+        }
+      ]
+    };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(salesService, 'updateSalesService').resolves({
+      "saleId": 1,
+      "itemsUpdated": [
+        {
+          "productId": 1,
+          "quantity": 10
+        },
+        {
+          "productId": 2,
+          "quantity": 50
+        }
+      ]
+    });
+    await salesController.updateSalesController(req, res);
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith({
+      "saleId": 1,
+      "itemsUpdated": [
+        {
+          "productId": 1,
+          "quantity": 10
+        },
+        {
+          "productId": 2,
+          "quantity": 50
+        }
+      ]
+    });
+  })
 });

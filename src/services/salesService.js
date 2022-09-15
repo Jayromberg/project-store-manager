@@ -70,8 +70,16 @@ const deleteSaleService = async (id) => {
 };
 
 const updateSalesService = async (id, sales) => {
-  const generatePromises = sales.map((sale) => salesModel.updateSales(id, sale));
+  const [salesData] = await salesModel.findSalesByIdModel(id);
+  if (!salesData) throw new Error('SALE_NOT_FOUND');
 
+  const { error } = salesValidation(sales);
+  if (error) throw new Error(error.message);
+
+  const productIdValidation = await validateInputProductId(sales);
+  if (!productIdValidation) throw new Error('PRODUCT_NOT_FOUND');
+
+  const generatePromises = sales.map((sale) => salesModel.updateSales(id, snakeize(sale)));
   const resolves = await Promise.all(generatePromises);
 
   if (resolves.every((elem) => elem.affectedRows === 1)) {
@@ -80,8 +88,6 @@ const updateSalesService = async (id, sales) => {
       itemsUpdated: sales,
     };
   }
-  
-  throw new Error('SALE_NOT_FOUND');
 };
 
 module.exports = {

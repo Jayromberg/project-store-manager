@@ -61,15 +61,15 @@
     "containerId": "",
     "name": "http://localhost:3000/products/5",
     "url": "http://localhost:3000/sales/1",
-    "method": "DELETE",
+    "method": "PUT",
     "sortNum": 0,
     "created": "2022-09-10T03:21:55.354Z",
-    "modified": "2022-09-14T20:29:17.527Z",
+    "modified": "2022-09-15T14:53:20.275Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\": \"Martelo do Batman\"\n}",
+      "raw": "[\n  {\n    \"productId\": 1,\n    \"quantity\": 10\n  },\n  {\n    \"productId\": 2,\n    \"quantity\": 50\n  }\n]",
       "form": []
     },
     "tests": []
