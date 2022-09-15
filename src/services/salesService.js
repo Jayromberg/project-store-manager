@@ -69,9 +69,25 @@ const deleteSaleService = async (id) => {
   return [];
 };
 
+const updateSalesService = async (id, sales) => {
+  const generatePromises = sales.map((sale) => salesModel.updateSales(id, sale));
+
+  const resolves = await Promise.all(generatePromises);
+
+  if (resolves.every((elem) => elem.affectedRows === 1)) {
+    return {
+      saleId: id,
+      itemsUpdated: sales,
+    };
+  }
+  
+  throw new Error('SALE_NOT_FOUND');
+};
+
 module.exports = {
   insertSalesService,
   findAllSalesService,
   findSalesByIdService,
   deleteSaleService,
+  updateSalesService,
 };

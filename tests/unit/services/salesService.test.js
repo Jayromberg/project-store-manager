@@ -27,7 +27,7 @@ describe('Sales Service', function () {
       .resolves(successfulDBRequest)
       .onSecondCall()
       .resolves(successfulDBRequest);
-    
+
     const sales = await salesService.insertSalesService(objectWithTheProductsSold);
     expect(sales).to.deep.equal(objectWithSalesReturned);
   });
@@ -41,7 +41,7 @@ describe('Sales Service', function () {
         .resolves(successfulDBRequest)
         .onSecondCall()
         .resolves([]);
-      
+
       await salesService.insertSalesService(objectWithNonExistentProduct);
     } catch (error) {
       expect(error.message).to.be.equal('PRODUCT_NOT_FOUND');
@@ -57,7 +57,7 @@ describe('Sales Service', function () {
         .resolves(successfulDBRequest)
         .onSecondCall()
         .resolves(successfulDBRequest);
-      
+
       await salesService.insertSalesService(objectWihMissingInput);
     } catch (error) {
       expect(error.message).to.be.equal('PRODUCT_ID_IS_REQUIRED');
@@ -102,4 +102,32 @@ describe('Sales Service', function () {
       expect(error.message).to.be.equal('SALE_NOT_FOUND');
     }
   });
+
+  it('update do sales', async function () {
+    sinon.stub(salesModel, 'updateSales').resolves({ affectedRows: 1 });
+    const response = await salesService.updateSalesService(1, [
+      {
+        "productId": 1,
+        "quantity": 10
+      },
+      {
+        "productId": 2,
+        "quantity": 50
+      }
+    ]);
+    expect(response).to.deep.equal({
+      "saleId": 1,
+      "itemsUpdated": [
+        {
+          "productId": 1,
+          "quantity": 10
+        },
+        {
+          "productId": 2,
+          "quantity": 50
+        }
+      ]
+    });
+  });
+
 });

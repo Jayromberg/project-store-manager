@@ -71,13 +71,9 @@ const deleteSale = async (id) => {
 };
 
 const updateSales = async (id, sales) => {
-  const columnsAndPlaceholder = Object.keys(sales)
-    .map((key) => `${key} = ?`)
-    .join(', ');
-
   const [update] = await connection.execute(
-    `UPDATE StoreManager.sales_products SET ${columnsAndPlaceholder} WHERE id = ? ;`,
-    [...Object.values(sales), id],
+    'UPDATE StoreManager.sales_products SET quantity = ? WHERE id = ? AND product_id = ? ;',
+    [sales.quantity, id, sales.product_id],
   );
 
   return update;
