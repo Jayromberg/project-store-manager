@@ -53,4 +53,13 @@ describe('Sales Model', function () {
     const result = await salesModel.deleteSale(1);
     expect(result).to.deep.equal({ affectedRows: 1 });
   });
+
+  it('UPDATE sales', async function () {
+    sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }])
+    const update = await salesModel.updateSales(1, {
+      "product_id": 1,
+      "quantity": 10
+    });
+    expect(update).to.deep.equal({ affectedRows: 1 });
+  });
 });

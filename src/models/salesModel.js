@@ -70,6 +70,19 @@ const deleteSale = async (id) => {
   return result;
 };
 
+const updateSales = async (id, sales) => {
+  const columnsAndPlaceholder = Object.keys(sales)
+    .map((key) => `${key} = ?`)
+    .join(', ');
+
+  const [update] = await connection.execute(
+    `UPDATE StoreManager.sales_products SET ${columnsAndPlaceholder} WHERE id = ? ;`,
+    [...Object.values(sales), id],
+  );
+
+  return update;
+};
+
 module.exports = {
   insertDateOfSalesModel,
   insertSalesModel,
@@ -78,4 +91,5 @@ module.exports = {
   findAllDateOfSalesModel,
   findAllSalesModel,
   deleteSale,
+  updateSales,
 };
