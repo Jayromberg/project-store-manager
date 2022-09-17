@@ -44,8 +44,7 @@ const deleteProductService = async (id) => {
 };
 
 const searchProductByNameService = async (name) => {
-  const [result] = await productsModel.searchProductByName(name);
-
+  const result = await productsModel.searchProductByName(name);
   return result;
 };
 

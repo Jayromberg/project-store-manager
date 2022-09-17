@@ -55,10 +55,22 @@ const deleteProductController = async (req, res) => {
   }
 };
 
+const searchProductByNameController = async (req, res) => {
+  try {
+    const { q } = req.query;
+    const result = await productsServices.searchProductByNameService(q);
+    res.status(200).json(result);
+  } catch (error) {
+    const err = mapError(error.message);
+    res.status(err.code).json({ message: err.message });
+  }
+};
+
 module.exports = {
   findAllProductsControllers,
   findProductsByIdControllers,
   insertProductControllers,
   updateProductController,
   deleteProductController,
+  searchProductByNameController,
 };
