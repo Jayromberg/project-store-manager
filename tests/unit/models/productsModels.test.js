@@ -39,4 +39,10 @@ describe('Products Model', function () {
     const result = await productsModel.deleteProduct(1);
     expect(result).to.deep.equal({ affectedRows: 1 });
   });
+
+  it('Lista o produto pelo nome', async function () {
+    sinon.stub(connection, 'execute').resolves([productsMockFromDB[1]]);
+    const response = await productsModel.searchProductByName('traje');
+    expect(response).to.deep.equal(productsMockFromDB[1])
+  });
 });
