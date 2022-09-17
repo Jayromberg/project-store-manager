@@ -142,4 +142,26 @@ describe('Products Controllers', function () {
     expect(res.status).to.have.been.calledWith(204);
     expect(res.json).to.have.been.calledWith();
   });
+
+  it('Busca um produto em estoque pelo nome', async function () {
+    const res = {};
+    const req = { query: { q: 'traje' } };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(productsServices, 'searchProductByNameService').resolves(servicesProductResponseById);
+    await productsControllers.searchProductByNameController(req, res);
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(servicesProductResponseById);
+  });
+
+  it('Retorna erro 500 genérico, caso ocorra um erro desconhecido', async function () {
+    const res = {};
+    const req = { query: { q: 'traje' } };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(productsServices, 'searchProductByNameService').throws(genericError);
+    await productsControllers.searchProductByNameController(req, res);
+    expect(res.status).to.have.been.calledWith(500);
+    expect(res.json).to.have.been.calledWith({ "message": "Internal error" });
+  });
 });
