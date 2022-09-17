@@ -107,4 +107,10 @@ describe('Products Services', function () {
       expect(error.message).to.be.equal('PRODUCT_NOT_FOUND');
     }
   });
+
+  it('Pesquisa um produto pelo nome', async function () {
+    sinon.stub(productsModel, 'searchProductByName').resolves([responseUpdateMock]);
+    const response = await productsServices.searchProductByNameService('Martelo');
+    expect(response).to.deep.equal(responseUpdateMock);
+  });
 });

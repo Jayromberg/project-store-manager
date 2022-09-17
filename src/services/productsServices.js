@@ -43,10 +43,17 @@ const deleteProductService = async (id) => {
   return [];
 };
 
+const searchProductByNameService = async (name) => {
+  const [result] = await productsModel.searchProductByName(name);
+
+  return result;
+};
+
 module.exports = {
   findAllProductsServices,
   findProductsByIdServices,
   insertProductServices,
   updateProductService,
   deleteProductService,
+  searchProductByNameService,
 };
