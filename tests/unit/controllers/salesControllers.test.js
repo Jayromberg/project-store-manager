@@ -154,4 +154,15 @@ describe('Sales Controller', function () {
       ]
     });
   })
+
+  it('Retorna erro ao tentar atualizar uma venda com id invalido', async function () {
+    const res = {};
+    const req = { params: { id: 999999999 }, body: {} };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(salesService, 'updateSalesService').throws(saleNotFound);
+    await salesController.updateSalesController(req, res);
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith({ "message": "Sale not found" });
+  });
 });

@@ -48,13 +48,13 @@ const findSalesByIdService = async (id) => {
   const [[date], sales] = camelize(result);
 
   if (!date) throw new Error('SALE_NOT_FOUND');
-  
+
   const resultJoin = sales.map((sale) => {
     const newObj = {
-          date: date.date,
-          productId: sale.productId,
-          quantity: sale.quantity,
-        };
+      date: date.date,
+      productId: sale.productId,
+      quantity: sale.quantity,
+    };
     return newObj;
   });
 
@@ -80,14 +80,12 @@ const updateSalesService = async (id, sales) => {
   if (!productIdValidation) throw new Error('PRODUCT_NOT_FOUND');
 
   const generatePromises = sales.map((sale) => salesModel.updateSales(id, snakeize(sale)));
-  const resolves = await Promise.all(generatePromises);
-
-  if (resolves.every((elem) => elem.affectedRows === 1)) {
-    return {
-      saleId: id,
-      itemsUpdated: sales,
-    };
-  }
+  await Promise.all(generatePromises);
+  
+  return {
+    saleId: id,
+    itemsUpdated: sales,
+  };
 };
 
 module.exports = {

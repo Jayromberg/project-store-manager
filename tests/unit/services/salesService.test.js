@@ -130,4 +130,67 @@ describe('Sales Service', function () {
     });
   });
 
+  it('Venda não encontrado ao atualizar', async function () {
+    sinon.stub(salesModel, 'findSalesByIdModel').resolves([]);
+    try {
+      await salesService.updateSalesService(1, []);
+    } catch (error) {
+      expect(error.message).to.be.equal('SALE_NOT_FOUND');
+    }
+  });
+
+  it('ProductId inexistente ao atualizar', async function () {
+    try {
+      sinon.stub(salesModel, 'updateSales')
+        .onFirstCall()
+        .resolves({ insertId: 1 })
+        .onSecondCall()
+        .resolves({ insertId: 1 });
+      sinon.stub(productsModel, 'findProductsByIdModel')
+        .onFirstCall()
+        .resolves(successfulDBRequest)
+        .onSecondCall()
+        .resolves(successfulDBRequest);
+
+      await salesService.updateSalesService(1, [
+        {
+          "quantity": 10
+        },
+        {
+          "productId": 2,
+          "quantity": 50
+        }
+      ]);
+    } catch (error) {
+      expect(error.message).to.be.equal('PRODUCT_ID_IS_REQUIRED');
+    }
+  });
+
+  it('Produto não encontrado ao atualizar', async function () {
+    try {
+      sinon.stub(salesModel, 'updateSales')
+        .onFirstCall()
+        .resolves({ insertId: 1 })
+        .onSecondCall()
+        .resolves({ insertId: 1 });
+      sinon.stub(productsModel, 'findProductsByIdModel')
+        .onFirstCall()
+        .resolves(successfulDBRequest)
+        .onSecondCall()
+        .resolves([]);
+
+      await salesService.updateSalesService(1, [
+        {
+          "productId": 1,
+          "quantity": 10
+        },
+        {
+          "productId": 2,
+          "quantity": 50
+        }
+      ]);
+    } catch (error) {
+      expect(error.message).to.be.equal('PRODUCT_NOT_FOUND');
+    }
+  });
 });
