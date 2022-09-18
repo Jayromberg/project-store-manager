@@ -7,7 +7,7 @@
 
 # Store Manager
 
-Api de registro de vendas e produtos, desenvolvida em node.js com o banco de dados MySQL, que possibilita a atualização, cadastro e exclusão de dados. Foi utilizando a arquitetura MSC (model-service-controller) e TDD (Test Driven Development) abrangendo 100% de cobertura de teste.
+API de registro de vendas e produtos, desenvolvida em node.js com o banco de dados MySQL, que possibilita a atualização, cadastro e exclusão de dados. Foi utilizado a arquitetura MSC (model-service-controller) e TDD (Test Driven Development) abrangendo 100% de cobertura de teste.
 
 ---
 </br>
