@@ -100,7 +100,7 @@ API de registro de vendas e produtos, desenvolvida em node.js com o banco de dad
 </details>
 
 <details>
-  <summary><strong>sales</strong></summary>
+  <summary><strong>Sales</strong></summary>
 
   #### Cadastra venda 
 
